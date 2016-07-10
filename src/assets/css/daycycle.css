@@ -1,0 +1,13 @@
+.daycycle {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background: linear-gradient(0, #01040D 4%, #142763 12%, #65434D 20%, #E26928 22%, #FABA2C 25%, #FAB92C 27%, #ffffff 30%, #4499E7 36%, #2765C3 50%, #4499E7 64%, #ffffff 70%, #FAB92C 73%, #FABA2C 75%, #E26928 78%, #65434D 80%, #142763 88%, #01040D 96%, #01040D 100%);
+    background-size: 100% 2400%;
+    /* 86400 seconds are in a day. */
+    animation: daycycle 86400s linear infinite;
+}
+@keyframes daycycle {
+}
