@@ -1,4 +1,5 @@
 <link rel="import" href="../polymer/polymer.html">
+<!-- <link rel="import" href="bower_components/polymer/polymer.html"> -->
 
 <!--
 `pxb-daycycle`
@@ -45,7 +46,7 @@ Fills a space with a gradient based on the sky at a time of day.
                 }
             }
         </style>
-        <div class="pxb-daycycle-backdrop"></div>
+        <div class="pxb-daycycle-backdrop" style="animation-delay: [[_animationDelay]];"></div>
     </template>
 
     <script>
@@ -461,12 +462,18 @@ Fills a space with a gradient based on the sky at a time of day.
                 }
                 return x;
             }
-            function writeNowTimeOffset(localMidnight, midnight, now) {
-                var rule = getStyleRule('.pxb-daycycle-backdrop.pxb-daycycle');
-                var localMidnight = typeof localMidnight == 'undefined' ? midnight : localMidnight;
-                if (rule && rule.style) {
-                    rule.style.animationDelay = -1 * toFixed(parseInt((now - localMidnight) / 1000, 10)) + 's';
+            function writeNowTimeOffset(localMidnight, midnight, now, polymerElement) {
+                // var rule = getStyleRule('.pxb-daycycle-backdrop.pxb-daycycle');
+                if (polymerElement && polymerElement._animationDelay) {
+                    var localMidnight = typeof localMidnight == 'undefined' ? midnight : localMidnight;
+                    // if (rule && rule.style) {
+                    //     rule.style.animationDelay = -1 * toFixed(parseInt((now - localMidnight) / 1000, 10)) + 's';
+                    // } else {
+                        polymerElement._animationDelay = -1 * toFixed(parseInt((now - localMidnight) / 1000, 10)) + 's';
+                        polymerElement.updateStyles();
+                    // }
                 }
+
             }
             function arrayToMap(array) {
                 return array.reduce(
@@ -538,6 +545,10 @@ Fills a space with a gradient based on the sky at a time of day.
                         type: Number,
                         observer: '_lonChanged',
                         reflectToAttribute: true
+                    },
+                    _animationDelay: {
+                        type: String,
+                        value: 'initial'
                     }
                 },
                 observers: [
@@ -545,10 +556,9 @@ Fills a space with a gradient based on the sky at a time of day.
                 ],
                 _timeChanged: function(newValue, oldValue) {
                     if (newValue != oldValue) {
-                        console.log('Time changed to', newValue, 'from', oldValue);
                         nowDate = newValue || new Date();
                         now = nowDate.getTime();
-                        writeNowTimeOffset(undefined, midnight, now);
+                        writeNowTimeOffset(undefined, midnight, now, this);
                         daycycleKeyframesRule = getKeyframesRule('pxb-daycycle-animation')
                         if (daycycleKeyframesRule) {
                             writeNewKeyframeRules(timesArr, daycycleKeyframesRule);
@@ -556,16 +566,16 @@ Fills a space with a gradient based on the sky at a time of day.
                     }
 
                 },
-                _latChanged: function(newValue, oldValue) {
-                    console.log('Latitude changed to', newValue, 'from', oldValue);
-                },
-                _lonChanged: function(newValue, oldValue) {
-                    console.log('Latitude changed to', newValue, 'from', oldValue);
-                },
+                // _latChanged: function(newValue, oldValue) {
+                //     console.log('Latitude changed to', newValue, 'from', oldValue);
+                // },
+                // _lonChanged: function(newValue, oldValue) {
+                //     console.log('Latitude changed to', newValue, 'from', oldValue);
+                // },
                 _locationChanged: function(lat, lon, time) {
                     // Test data
                     // 30.390481, 97.695244
-                    console.log('Location changed to ' + lat + ', ' + lon + '.');
+                    // console.log('Location changed to ' + lat + ', ' + lon + '.');
                     if ("geolocation" in navigator) {
                         var daycycleKeyframesRule = getKeyframesRule('pxb-daycycle-animation'),
                             nowDate = new Date(),
@@ -578,7 +588,7 @@ Fills a space with a gradient based on the sky at a time of day.
                             timesMap = arrayToMap(timesArr);
                             timesMap.sunrise.start = (sunrise - solarMidnight) / (24 * 60 * 60 * 1000);
                             timesMap.sunset.start = (sunset - solarMidnight) / (24 * 60 * 60 * 1000);
-                            writeNowTimeOffset(solarMidnight, midnight, now);
+                            writeNowTimeOffset(solarMidnight, midnight, now, this);
                             daycycleKeyframesRule = getKeyframesRule('pxb-daycycle-animation')
                             if (daycycleKeyframesRule) {
                                 writeNewKeyframeRules(timesArr, daycycleKeyframesRule);
