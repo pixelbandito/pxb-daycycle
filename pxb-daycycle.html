@@ -46,7 +46,7 @@ Fills a space with a gradient based on the sky at a time of day.
                 }
             }
         </style>
-        <div class="pxb-daycycle-backdrop" style="animation-delay: [[_animationDelay]];"></div>
+        <div class="pxb-daycycle-backdrop" style$="animation-delay: [[_animationDelay]];"></div>
     </template>
 
     <script>
@@ -566,12 +566,12 @@ Fills a space with a gradient based on the sky at a time of day.
                     }
 
                 },
-                // _latChanged: function(newValue, oldValue) {
-                //     console.log('Latitude changed to', newValue, 'from', oldValue);
-                // },
-                // _lonChanged: function(newValue, oldValue) {
-                //     console.log('Latitude changed to', newValue, 'from', oldValue);
-                // },
+                _latChanged: function(newValue, oldValue) {
+                    // console.log('Latitude changed to', newValue, 'from', oldValue);
+                },
+                _lonChanged: function(newValue, oldValue) {
+                    // console.log('Latitude changed to', newValue, 'from', oldValue);
+                },
                 _locationChanged: function(lat, lon, time) {
                     // Test data
                     // 30.390481, 97.695244

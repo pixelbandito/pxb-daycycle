@@ -8144,7 +8144,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 }
             }
         </style>
-        <div class="pxb-daycycle-backdrop" style="animation-delay: [[_animationDelay]];"></div>
+        <div class="pxb-daycycle-backdrop" style$="animation-delay: [[_animationDelay]];"></div>
     </template>
 
     <script>
@@ -8664,12 +8664,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     }
 
                 },
-                // _latChanged: function(newValue, oldValue) {
-                //     console.log('Latitude changed to', newValue, 'from', oldValue);
-                // },
-                // _lonChanged: function(newValue, oldValue) {
-                //     console.log('Latitude changed to', newValue, 'from', oldValue);
-                // },
+                _latChanged: function(newValue, oldValue) {
+                    // console.log('Latitude changed to', newValue, 'from', oldValue);
+                },
+                _lonChanged: function(newValue, oldValue) {
+                    // console.log('Latitude changed to', newValue, 'from', oldValue);
+                },
                 _locationChanged: function(lat, lon, time) {
                     // Test data
                     // 30.390481, 97.695244
