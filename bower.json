@@ -2,6 +2,7 @@
   "name": "pxb-daycycle",
   "description": "Fills a space with a gradient based on the sky at a time of day.",
   "main": "pxb-daycycle.html",
+  "version": "1.0.2",
   "dependencies": {
     "polymer": "Polymer/polymer#^1.4.0"
   },
